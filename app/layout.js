@@ -2,6 +2,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import { UserProvider } from "./api/UserProvider/UserProvider";
+
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -22,9 +24,12 @@ export default async function RootLayout({ children }) {
     <html lang={locale} className={`${poppins.variable} "scroll-smooth"`}>
       <body cz-shortcut-listen="true">
         <NextIntlClientProvider messages={messages}>
-        {children}
+          <UserProvider> 
+            {children}
+          </UserProvider>
         </NextIntlClientProvider>
-        </body>
+
+      </body>
     </html>
   );
 }

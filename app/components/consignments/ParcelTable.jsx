@@ -18,27 +18,61 @@ const ParcelTable = () => {
   const [activeTab, setActiveTab] = useState("Pending");
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-
+console.log(orders)
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
   const [paginationGroup, setPaginationGroup] = useState(1); 
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetch("/api/confirm-orders");
-        const data = await res.json();
-        console.log("API Data:", data);
-        setOrders(data.confirmed_order_list || []);
-      } catch (error) {
-        console.error("Fetch error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchOrders = async () => {
+    try {
+      const stored = localStorage.getItem("token");
 
-    getData();
-  }, []);
+      if (!stored) {
+        console.error("No token found in localStorage");
+        return;
+      }
+
+     
+      const parsed = JSON.parse(stored);
+      const token = parsed?.token;
+
+      if (!token) {
+        console.error("No token value inside localStorage");
+        return;
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_MERCHANT_API_KEY}/confirm-orders-list`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Confirm orders fetch failed");
+      }
+
+      const data = await response.json();
+      console.log("Orders:", data);
+
+      setOrders(data.confirmed_order_list || []);
+    } catch (error) {
+      console.error("API Error:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchOrders();
+}, []);
+
+
+
+
 
   // Pagination calculations
   const totalPages = Math.ceil(orders.length / itemsPerPage);
