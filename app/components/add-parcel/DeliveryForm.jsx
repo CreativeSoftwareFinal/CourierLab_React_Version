@@ -7,7 +7,7 @@
 
 //   return (
 //    <div>
-//      <div className=" md:p-6">             
+//      <div className=" md:p-6">
 //       <div className="flex mb-6">
 //         <label className="inline-flex items-center mr-4 cursor-pointer">
 //           <input
@@ -219,12 +219,6 @@
 // };
 
 // export default DeliveryForm;
-
-
-
-
-
-
 
 // "use client";
 // import { useEffect, useState } from "react";
@@ -502,62 +496,35 @@
 
 // export default DeliveryForm;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"use client";
-import { useEffect, useState } from "react";
+'use client';
+import { useEffect, useState } from 'react';
 
 const DeliveryForm = () => {
-  const [deliveryType, setDeliveryType] = useState("home");
+  const [deliveryType, setDeliveryType] = useState('home');
   const [exchange, setExchange] = useState(false);
-
 
   const [districts, setDistricts] = useState([]);
   const [areas, setAreas] = useState([]);
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState('');
 
-  
+  // set weight
+  const [weights, setWeights] = useState([]);
+  const [selectedWeight, setSelectedWeight] = useState(null);
+
+  console.log(selectedWeight);
+
   useEffect(() => {
     const fetchDistricts = async () => {
       try {
         const res = await fetch(
-          "https://admin.merchantfcservice.com/api/distList"
+          'https://admin.merchantfcservice.com/api/distList'
         );
         const data = await res.json();
         if (data.Status) {
           setDistricts(data.data);
         }
       } catch (error) {
-        console.error("Error fetching districts:", error);
+        console.error('Error fetching districts:', error);
       }
     };
     fetchDistricts();
@@ -576,11 +543,29 @@ const DeliveryForm = () => {
           setAreas(data.data);
         }
       } catch (error) {
-        console.error("Error fetching areas:", error);
+        console.error('Error fetching areas:', error);
       }
     };
     fetchAreas();
   }, [selectedDistrict]);
+
+  // fetch Weight
+  useEffect(() => {
+    const fetchWeight = async () => {
+      try {
+        const res = await fetch(
+          'https://admin.merchantfcservice.com/api/weights'
+        );
+        const data = await res.json();
+        if (data.Status) {
+          setWeights(data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching districts:', error);
+      }
+    };
+    fetchWeight();
+  }, []);
 
   return (
     <div className="md:p-6">
@@ -589,8 +574,8 @@ const DeliveryForm = () => {
           <input
             type="radio"
             className="form-radio h-4 w-4 text-primary-active cursor-pointer"
-            checked={deliveryType === "home"}
-            onChange={() => setDeliveryType("home")}
+            checked={deliveryType === 'home'}
+            onChange={() => setDeliveryType('home')}
           />
           <span className="ml-2 text-md font-medium text-primary">
             Home Delivery
@@ -600,8 +585,8 @@ const DeliveryForm = () => {
           <input
             type="radio"
             className="form-radio h-4 w-4 text-primary-active cursor-pointer"
-            checked={deliveryType === "point"}
-            onChange={() => setDeliveryType("point")}
+            checked={deliveryType === 'point'}
+            onChange={() => setDeliveryType('point')}
           />
           <span className="ml-2 text-md font-medium text-primary">
             Point Delivery
@@ -609,7 +594,7 @@ const DeliveryForm = () => {
         </label>
       </div>
 
-      {deliveryType === "point" && (
+      {deliveryType === 'point' && (
         <div className="mb-4">
           <label className="block text-md font-medium text-primary-active mb-1">
             পয়েন্ট ডেলিভারির ক্ষেত্রে প্রাপককে নিকটস্থ হাব থেকে পার্সেল সংগ্রহ
@@ -697,10 +682,10 @@ const DeliveryForm = () => {
           <select
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
             value={selectedDistrict}
-            onChange={(e) => setSelectedDistrict(e.target.value)}
+            onChange={e => setSelectedDistrict(e.target.value)}
           >
             <option value="">Select District</option>
-            {districts.map((dist) => (
+            {districts.map(dist => (
               <option key={dist.id} value={dist.id}>
                 {dist.name} ({dist.bn_name})
               </option>
@@ -713,7 +698,7 @@ const DeliveryForm = () => {
           </label>
           <select className="w-full p-3 border border-gray-300 rounded-md focus:outline-none">
             <option value="">Select Area</option>
-            {areas.map((area) => (
+            {areas.map(area => (
               <option key={area.id} value={area.id}>
                 {area.area}
               </option>
@@ -756,15 +741,25 @@ const DeliveryForm = () => {
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
           />
         </div>
-      <div>
-          <label className="block text-md font-medium text-secondary mb-1">
-            Waight
-          </label>
-          <input
-            type="text"
-            placeholder="0"
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
-          />
+        {/* Weight Dropdown */}
+        <div className="">
+          <div>
+            <label className="block text-md font-medium text-secondary mb-1">
+              Weight
+            </label>
+            <select
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
+              value={setSelectedWeight}
+              onChange={e => setSelectedWeight(e.target.value)}
+            >
+              <option value="">Select weight</option>
+              {weights.map(weight => (
+                <option key={weight.id} value={weight.id}>
+                  {weight.title}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div>
           <label className="block text-md font-medium text-secondary mb-1">
@@ -795,12 +790,12 @@ const DeliveryForm = () => {
       </div>
 
       <p className="mt-4 text-md text-secondary text-center font-medium">
-        * PickUp Time{" "}
+        * PickUp Time{' '}
         <span className="text-primary-active font-medium">4pm-7pm</span> Approx.
       </p>
 
       <p className="mt-7 text-md text-primary font-medium">
-        To create multiple orders quickly try{" "}
+        To create multiple orders quickly try{' '}
         <span className="text-primary-active font-medium">Bulk Import</span>
       </p>
     </div>
