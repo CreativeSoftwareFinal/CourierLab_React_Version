@@ -1,78 +1,73 @@
-"use client";
-import { useEffect, useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+'use client';
+import { useEffect, useState } from 'react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const ParcelTable = () => {
   const tabs = [
-    "All",
-    "List by Date",
-    "Pending",
-    "Approval Pending",
-    "Delivered",
-    "Partly Delivered",
-    "Cancelled",
-    "In Review",
-    "Pick-n-Drop",
+    'All',
+    'List by Date',
+    'Pending',
+    'Approval Pending',
+    'Delivered',
+    'Partly Delivered',
+    'Cancelled',
+    'In Review',
+    'Pick-n-Drop',
   ];
 
-  const [activeTab, setActiveTab] = useState("Pending");
+  const [activeTab, setActiveTab] = useState('Pending');
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-console.log(orders)
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
-  const [paginationGroup, setPaginationGroup] = useState(1); 
+  const [paginationGroup, setPaginationGroup] = useState(1);
 
-useEffect(() => {
-  const fetchOrders = async () => {
-    try {
-      const stored = localStorage.getItem("token");
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const stored = localStorage.getItem('token');
 
-      if (!stored) {
-        console.error("No token found in localStorage");
-        return;
-      }
-
-     
-      const parsed = JSON.parse(stored);
-      const token = parsed?.token;
-
-      if (!token) {
-        console.error("No token value inside localStorage");
-        return;
-      }
-
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_MERCHANT_API_KEY}/confirm-orders-list`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        if (!stored) {
+          console.error('No token found in localStorage');
+          return;
         }
-      );
 
-      if (!response.ok) {
-        throw new Error("Confirm orders fetch failed");
+        const parsed = JSON.parse(stored);
+        const token = parsed?.token;
+
+        if (!token) {
+          console.error('No token value inside localStorage');
+          return;
+        }
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_MERCHANT_API_KEY}/confirm-orders-list`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error('Confirm orders fetch failed');
+        }
+
+        const data = await response.json();
+        console.log('Orders:', data);
+
+        setOrders(data.confirmed_order_list || []);
+      } catch (error) {
+        console.error('API Error:', error.message);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const data = await response.json();
-      console.log("Orders:", data);
-
-      setOrders(data.confirmed_order_list || []);
-    } catch (error) {
-      console.error("API Error:", error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchOrders();
-}, []);
-
-
-
-
+    fetchOrders();
+  }, []);
 
   // Pagination calculations
   const totalPages = Math.ceil(orders.length / itemsPerPage);
@@ -94,7 +89,7 @@ useEffect(() => {
     }
   };
 
-  const handlePageClick = (page) => {
+  const handlePageClick = page => {
     setCurrentPage(page);
   };
 
@@ -110,8 +105,8 @@ useEffect(() => {
           onClick={() => handlePageClick(i)}
           className={`mx-2 px-2.5 py-1 rounded-full text-sm font-medium transition ${
             currentPage === i
-              ? "button-primary cursor-pointer text-white"
-              : "bg-white text-primary-active cursor-pointer hover:bg-blue-100"
+              ? 'button-primary cursor-pointer text-white'
+              : 'bg-white text-primary-active cursor-pointer hover:bg-blue-100'
           }`}
         >
           {i}
@@ -138,8 +133,8 @@ useEffect(() => {
             }}
             className={`px-4 py-2 rounded border text-sm font-medium transition-colors ${
               activeTab === tab
-                ? "bg-blue-100 button-primary cursor-pointer"
-                : "bg-white text-gray-700 cursor-pointer border-gray"
+                ? 'bg-blue-100 button-primary cursor-pointer'
+                : 'bg-white text-gray-700 cursor-pointer border-gray'
             }`}
           >
             {tab}
@@ -184,7 +179,7 @@ useEffect(() => {
                     <td className="px-4 py-3">{order.customer_address}</td>
                     <td className="px-4 py-3">{order.delivery}</td>
                     <td className="px-4 py-3">{order.collection}</td>
-                    <td className="px-4 py-3">{order.remarks || ""}</td>
+                    <td className="px-4 py-3">{order.remarks || ''}</td>
                     <td className="px-4 py-3">{order.status}</td>
                     <td className="px-4 py-3">-</td>
                   </tr>
