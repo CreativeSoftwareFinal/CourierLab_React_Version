@@ -498,7 +498,7 @@
 
 'use client';
 import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 const DeliveryForm = () => {
   const [formData, setFormData] = useState({
@@ -519,7 +519,6 @@ const DeliveryForm = () => {
   const [districts, setDistricts] = useState([]);
   const [areas, setAreas] = useState([]);
   const [weights, setWeights] = useState([]);
-  const [weight, setWeight] = useState('');
 
   // fetch Districts
   useEffect(() => {
@@ -612,15 +611,15 @@ const DeliveryForm = () => {
         pickup_date: '',
         pckup_time: '',
         remarks: formData.note,
-        category: 'Document',
+        category: '',
         weight: formData.weight,
         collection: formData.cod || '',
         district: formData.district,
         imp: 'Regular',
         area: formData.area,
         order_id: formData.invoice,
-        is_exchange: formData.exchange ? 1 : 0, // Exchange চেক করলে 1, না হলে 0
-        isPartial: formData.partial ? 1 : 0, // Partial চেক করলে 1, না হলে 0
+        is_exchange: formData.exchange ? 1 : 0,
+        isPartial: formData.partial ? 1 : 0,
       };
 
       console.log('Sending Data:', finalData);
@@ -638,18 +637,26 @@ const DeliveryForm = () => {
           body: JSON.stringify(finalData),
         }
       );
-      if (res.status === 200) {
-        alert('parcel loaded successfully');
-      }
-      const text = await res.text();
-      console.log('Raw Response:', text); // এখানে আসল রেসপন্স দেখো
 
-      let data;
-      try {
-        data = JSON.parse(text);
-        console.log('Parsed Response:', data);
-      } catch {
-        throw new Error('Response is not JSON. Maybe wrong URL or token.');
+      if (!res.ok) {
+        toast.error(`Request failed: ${res.status}`);
+      }
+      if (res.status === 200) {
+        toast.success('parcel loaded successfully');
+        setFormData({
+          phone: '',
+          cod: '',
+          name: '',
+          invoice: '',
+          address: '',
+          note: '',
+          district: '',
+          districtId: '',
+          area: '',
+          weight: '',
+          exchange: false,
+          partial: false,
+        });
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -747,38 +754,48 @@ const DeliveryForm = () => {
       </div>
 
       {/* District & Area */}
-      <div className="flex gap-4">
-        <select
-          name="district"
-          value={formData.districtId}
-          onChange={handleDistrictChange}
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
-        >
-          <option value="">Select District</option>
-          {districts.map(dist => (
-            <option key={dist.id} value={dist.id}>
-              {dist.name} ({dist.bn_name})
-            </option>
-          ))}
-        </select>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-md font-medium text-secondary mb-1">
+            District
+          </label>
+          <select
+            name="district"
+            value={formData.districtId}
+            onChange={handleDistrictChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
+          >
+            <option value="">Select District</option>
+            {districts.map(dist => (
+              <option key={dist.id} value={dist.id}>
+                {dist.name} ({dist.bn_name})
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <select
-          name="area"
-          value={formData.area}
-          onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
-        >
-          <option value="">Select Area</option>
-          {areas.map(area => (
-            <option key={area.id} value={area.area}>
-              {area.area}
-            </option>
-          ))}
-        </select>
+        <div>
+          <label className="block text-md font-medium text-secondary mb-1">
+            Area
+          </label>
+          <select
+            name="area"
+            value={formData.area}
+            onChange={handleChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
+          >
+            <option value="">Select Area</option>
+            {areas.map(area => (
+              <option key={area.id} value={area.area}>
+                {area.area}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Weight & Options */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="">
         <div>
           <label className="block text-md font-medium text-secondary mb-1">
             Weight
@@ -797,36 +814,35 @@ const DeliveryForm = () => {
             ))}
           </select>
         </div>
+      </div>
+      <div className="flex flex-col justify-between">
+        <div className="flex gap-4">
+          <label className="flex items-center gap-2 mb-2">
+            <input
+              type="checkbox"
+              name="exchange"
+              checked={formData.exchange}
+              onChange={handleChange} // এটা ঠিক আছে
+            />
+            Exchange
+          </label>
 
-        <div className="flex flex-col justify-between">
-          <div className="flex gap-4">
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                name="exchange"
-                checked={formData.exchange}
-                onChange={handleChange} // এটা ঠিক আছে
-              />
-              Exchange
-            </label>
-
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                name="partial"
-                checked={formData.partial}
-                onChange={handleChange} // এটা ঠিক আছে
-              />
-              Partial
-            </label>
-          </div>
-          <button
-            type="submit"
-            className="w-full button-primary cursor-pointer text-white p-2.5 px-4 rounded-md hover:button-primary text-xl"
-          >
-            Submit
-          </button>
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              name="partial"
+              checked={formData.partial}
+              onChange={handleChange} // এটা ঠিক আছে
+            />
+            Partial
+          </label>
         </div>
+        <button
+          type="submit"
+          className="w-full button-primary cursor-pointer text-white p-2.5 px-4 rounded-md hover:button-primary text-xl"
+        >
+          Submit
+        </button>
       </div>
     </form>
   );
