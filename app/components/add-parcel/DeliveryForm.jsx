@@ -498,6 +498,7 @@
 
 'use client';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 const DeliveryForm = () => {
   const [formData, setFormData] = useState({
@@ -610,7 +611,7 @@ const DeliveryForm = () => {
         customer_phone: formData.phone,
         pickup_date: '',
         pckup_time: '',
-        remarks: '',
+        remarks: formData.note,
         category: 'Document',
         weight: formData.weight,
         collection: formData.cod || '',
@@ -634,7 +635,7 @@ const DeliveryForm = () => {
           body: JSON.stringify(finalData),
         }
       );
-
+      toast.success('User loaded successfully');
       const text = await res.text();
       console.log('Raw Response:', text); // এখানে আসল রেসপন্স দেখো
 
