@@ -618,6 +618,9 @@ const DeliveryForm = () => {
         district: formData.district,
         imp: 'Regular',
         area: formData.area,
+        order_id: formData.invoice,
+        is_exchange: formData.exchange ? 1 : 0,
+        isPartial: formData.partial ? 1 : 0,
       };
 
       console.log('Sending Data:', finalData);
