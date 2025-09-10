@@ -619,8 +619,8 @@ const DeliveryForm = () => {
         imp: 'Regular',
         area: formData.area,
         order_id: formData.invoice,
-        is_exchange: formData.exchange ? 1 : 0,
-        isPartial: formData.partial ? 1 : 0,
+        is_exchange: formData.exchange ? 1 : 0, // Exchange চেক করলে 1, না হলে 0
+        isPartial: formData.partial ? 1 : 0, // Partial চেক করলে 1, না হলে 0
       };
 
       console.log('Sending Data:', finalData);
@@ -638,7 +638,9 @@ const DeliveryForm = () => {
           body: JSON.stringify(finalData),
         }
       );
-      toast.success('User loaded successfully');
+      if (res.status === 200) {
+        alert('parcel loaded successfully');
+      }
       const text = await res.text();
       console.log('Raw Response:', text); // এখানে আসল রেসপন্স দেখো
 
@@ -803,16 +805,17 @@ const DeliveryForm = () => {
                 type="checkbox"
                 name="exchange"
                 checked={formData.exchange}
-                onChange={handleChange}
+                onChange={handleChange} // এটা ঠিক আছে
               />
               Exchange
             </label>
+
             <label className="flex items-center gap-2">
               <input
                 type="checkbox"
                 name="partial"
                 checked={formData.partial}
-                onChange={handleChange}
+                onChange={handleChange} // এটা ঠিক আছে
               />
               Partial
             </label>
