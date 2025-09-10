@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   FaBars,
   FaSearch,
@@ -6,18 +6,17 @@ import {
   FaReceipt,
   FaTimes,
   FaHandPointer,
-} from "react-icons/fa";
-import { GoNote } from "react-icons/go";
-import { useState} from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import NotificationBell from "./topbar/NotificationBell";
-import ProfileMenu from "./topbar/Profile";
-import LanguageToggle from "./topbar/LanguageToggle";
-
+} from 'react-icons/fa';
+import { GoNote } from 'react-icons/go';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import NotificationBell from './topbar/NotificationBell';
+import ProfileMenu from './topbar/Profile';
+import LanguageToggle from './topbar/LanguageToggle';
 
 const Topbar = ({ toggleSidebar, toggleMobileSearch, showMobileSearch }) => {
- const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const router = useRouter();
   const [balanceClicked, setBalanceClicked] = useState(false);
 
@@ -28,16 +27,15 @@ const Topbar = ({ toggleSidebar, toggleMobileSearch, showMobileSearch }) => {
         query
       )}`
     );
-      setQuery("");
+    setQuery('');
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+  const handleKeyDown = e => {
+    if (e.key === 'Enter') {
       e.preventDefault();
       handleSearch();
     }
   };
-  
 
   const CheckBalanceButton = () => (
     <button
@@ -75,7 +73,7 @@ const Topbar = ({ toggleSidebar, toggleMobileSearch, showMobileSearch }) => {
             <div className="relative w-full max-w-md md:hidden">
               <input
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={e => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 type="text"
                 placeholder="Search..."
@@ -93,7 +91,7 @@ const Topbar = ({ toggleSidebar, toggleMobileSearch, showMobileSearch }) => {
                 <img
                   src="/img/logo.png"
                   alt="logo"
-                  className="h-8 mx-auto md:mx-0 md:ml-4  transition-opacity duration-200"
+                  className="h-20 mx-auto md:mx-0 md:ml-4  transition-opacity duration-200"
                 />
               </Link>
 
@@ -101,13 +99,16 @@ const Topbar = ({ toggleSidebar, toggleMobileSearch, showMobileSearch }) => {
                 <div className="relative transition-all duration-300 bg-[#FAFAFA]">
                   <input
                     value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    onChange={e => setQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
                     type="text"
                     placeholder="Search Consignment"
                     className="px-4 py-2.5 border border-[#a3a3a3] rounded-full w-48 lg:w-60 focus:outline-none transition-all duration-300 hover:border-gray-400 focus:border-[#a3a3a3]"
                   />
-                  <FaSearch onClick={handleSearch} className="absolute right-3 top-3 text-gray-400 transition-colors duration-200 cursor-pointer" />
+                  <FaSearch
+                    onClick={handleSearch}
+                    className="absolute right-3 top-3 text-gray-400 transition-colors duration-200 cursor-pointer"
+                  />
                 </div>
 
                 <CheckBalanceButton />
@@ -138,15 +139,8 @@ const Topbar = ({ toggleSidebar, toggleMobileSearch, showMobileSearch }) => {
       <div className="md:hidden mt-3 flex justify-center">
         <CheckBalanceButton />
       </div>
-
-      
     </div>
   );
 };
 
 export default Topbar;
-
-
-
-
-

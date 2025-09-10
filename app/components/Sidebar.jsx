@@ -316,7 +316,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           <div className={`flex justify-center ${isOpen ? 'pb-2' : 'pt-2'}`}>
             <Image
               className={`transition-all duration-300 cursor-pointer ${
-                isOpen ? 'w-14 h-14 md:w-20 md:h-20' : 'w-10 h-10'
+                isOpen ? 'w-14 h-14 md:w-24 md:h-20' : 'w-10 h-10'
               }`}
               src="/img/marchant_logo_lg.png"
               alt="logo"
