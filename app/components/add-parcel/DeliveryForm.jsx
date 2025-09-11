@@ -612,7 +612,7 @@ const DeliveryForm = () => {
         pckup_time: '',
         remarks: formData.note,
         category: '',
-        weight: formData.weight,
+        weight: '10 to 20 kg',
         collection: formData.cod || '',
         district: formData.district,
         imp: 'Regular',
@@ -822,7 +822,7 @@ const DeliveryForm = () => {
               type="checkbox"
               name="exchange"
               checked={formData.exchange}
-              onChange={handleChange} // এটা ঠিক আছে
+              onChange={handleChange}
             />
             Exchange
           </label>
@@ -832,14 +832,14 @@ const DeliveryForm = () => {
               type="checkbox"
               name="partial"
               checked={formData.partial}
-              onChange={handleChange} // এটা ঠিক আছে
+              onChange={handleChange}
             />
             Partial
           </label>
         </div>
         <button
           type="submit"
-          className="w-full button-primary cursor-pointer text-white p-2.5 px-4 rounded-md hover:button-primary text-xl"
+          className="w-3xl mx-auto button-primary cursor-pointer text-white p-2.5 px-4 rounded-md hover:button-primary text-3xl"
         >
           Submit
         </button>

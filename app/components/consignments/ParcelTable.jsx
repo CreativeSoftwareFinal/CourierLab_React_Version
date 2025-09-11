@@ -6,13 +6,11 @@ const ParcelTable = () => {
   const tabs = [
     'All',
     'List by Date',
-    'Pending',
-    'Approval Pending',
-    'Delivered',
-    'Partly Delivered',
-    'Cancelled',
-    'In Review',
-    'Pick-n-Drop',
+    'Order Placed',
+    'Transit',
+    'Successfully Delivery',
+    'Return',
+    'Payment Completed',
   ];
 
   const [activeTab, setActiveTab] = useState('Pending');
@@ -122,7 +120,7 @@ const ParcelTable = () => {
       <h1 className="text-xl font-semibold mb-4">Consignments List</h1>
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-6 justify-center">
         {tabs.map((tab, idx) => (
           <button
             key={idx}
@@ -151,15 +149,16 @@ const ParcelTable = () => {
             <thead className="border-b border-gray">
               <tr className="text-primary">
                 <th className="px-4 py-3">SL#</th>
+                <th className="px-4 py-3">Crete Date</th>
                 <th className="px-4 py-3">Tracking ID</th>
                 <th className="px-4 py-3">Customer Name</th>
                 <th className="px-4 py-3">Customer Phone</th>
                 <th className="px-4 py-3">Customer Address</th>
                 <th className="px-4 py-3">Delivery Charge</th>
-                <th className="px-4 py-3">Collect</th>
+                <th className="px-4 py-3">Collection</th>
                 <th className="px-4 py-3">Remarks</th>
                 <th className="px-4 py-3">Order Status</th>
-                <th className="px-4 py-3">Action</th>
+                {/* <th className="px-4 py-3">Action</th> */}
               </tr>
             </thead>
             <tbody>
@@ -173,6 +172,7 @@ const ParcelTable = () => {
                 paginatedOrders.map((order, idx) => (
                   <tr key={`${order.id}-${idx}`}>
                     <td className="px-4 py-3">{startIndex + idx + 1}</td>
+                    <td className="px-4 py-3">11/22/33</td>
                     <td className="px-4 py-3">{order.tracking_id}</td>
                     <td className="px-4 py-3">{order.customer_name}</td>
                     <td className="px-4 py-3">{order.customer_phone}</td>
@@ -181,7 +181,7 @@ const ParcelTable = () => {
                     <td className="px-4 py-3">{order.collection}</td>
                     <td className="px-4 py-3">{order.remarks || ''}</td>
                     <td className="px-4 py-3">{order.status}</td>
-                    <td className="px-4 py-3">-</td>
+                    {/* <td className="px-4 py-3">-</td> */}
                   </tr>
                 ))
               )}
