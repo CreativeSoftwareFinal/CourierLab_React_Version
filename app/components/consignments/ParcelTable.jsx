@@ -5,15 +5,16 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 const ParcelTable = () => {
   const tabs = [
     'All',
+    'Rescheduled',
+    'Return Reach To Merchant',
+    'Payment Completed',
     'List by Date',
     'Order Placed',
     'Transit',
     'Successfully Delivery',
-    'Return',
-    'Payment Completed',
   ];
 
-  const [activeTab, setActiveTab] = useState('Pending');
+  const [activeTab, setActiveTab] = useState('All'); // default 'All'
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -67,10 +68,19 @@ const ParcelTable = () => {
     fetchOrders();
   }, []);
 
-  // Pagination calculations
-  const totalPages = Math.ceil(orders.length / itemsPerPage);
+  // ✅ Filtering orders by active tab
+  const filteredOrders = orders.filter(order => {
+    if (activeTab === 'All') return true;
+    return order.status === activeTab;
+  });
+
+  // ✅ Pagination calculations with filtered orders
+  const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedOrders = orders.slice(startIndex, startIndex + itemsPerPage);
+  const paginatedOrders = filteredOrders.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const handlePreviousPageGroup = () => {
     if (paginationGroup > 1) {
@@ -158,7 +168,6 @@ const ParcelTable = () => {
                 <th className="px-4 py-3">Collection</th>
                 <th className="px-4 py-3">Remarks</th>
                 <th className="px-4 py-3">Order Status</th>
-                {/* <th className="px-4 py-3">Action</th> */}
               </tr>
             </thead>
             <tbody>
@@ -181,7 +190,6 @@ const ParcelTable = () => {
                     <td className="px-4 py-3">{order.collection}</td>
                     <td className="px-4 py-3">{order.remarks || ''}</td>
                     <td className="px-4 py-3">{order.status}</td>
-                    {/* <td className="px-4 py-3">-</td> */}
                   </tr>
                 ))
               )}
@@ -191,7 +199,7 @@ const ParcelTable = () => {
       </div>
 
       {/* Pagination Controls */}
-      {orders.length > itemsPerPage && (
+      {filteredOrders.length > itemsPerPage && (
         <div className="flex justify-center items-center mt-6">
           <button
             onClick={handlePreviousPageGroup}

@@ -1,21 +1,19 @@
+'use client';
 
-
-"use client";
-
-import { CiMenuFries } from "react-icons/ci";
-import { MdClose } from "react-icons/md";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import setLanguageValue from "@/action/set-language-action";
-import { useTranslations } from "next-intl";
+import { CiMenuFries } from 'react-icons/ci';
+import { MdClose } from 'react-icons/md';
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import setLanguageValue from '@/action/set-language-action';
+import { useTranslations } from 'next-intl';
 
 const Navbar = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
 
   useEffect(() => {
-    const savedLang = localStorage.getItem("lang");
+    const savedLang = localStorage.getItem('lang');
     if (savedLang) {
       setSelectedLanguage(savedLang);
       setLanguageValue(savedLang);
@@ -23,9 +21,9 @@ const Navbar = () => {
   }, []);
 
   const toggleLanguage = () => {
-    const newLang = selectedLanguage === "en" ? "bn" : "en";
+    const newLang = selectedLanguage === 'en' ? 'bn' : 'en';
     setSelectedLanguage(newLang);
-    localStorage.setItem("lang", newLang);
+    localStorage.setItem('lang', newLang);
     setLanguageValue(newLang);
   };
 
@@ -56,19 +54,39 @@ const Navbar = () => {
           {/* Center: Navigation */}
           <div className="hidden md:flex flex-1 justify-center">
             <ul className="flex items-center gap-6 text-lg text-secondary">
-              <Link href="/"  className="cursor-pointer font-medium text-primary text-[16px] hover:text-success transition-all" prefetch>
+              <Link
+                href="/"
+                className="cursor-pointer font-medium text-primary text-[16px] hover:text-success transition-all"
+                prefetch
+              >
                 {tMenu('home')}
               </Link>
-              <Link href="/#about" className="cursor-pointer font-medium text-primary text-[16px] hover:text-success transition-all" prefetch>
-               {tMenu('about')}
+              <Link
+                href="/#about"
+                className="cursor-pointer font-medium text-primary text-[16px] hover:text-success transition-all"
+                prefetch
+              >
+                {tMenu('about')}
               </Link>
-              <Link href="#" className="cursor-pointer font-medium text-primary text-[16px] hover:text-success transition-all" prefetch>
+              <Link
+                href="#"
+                className="cursor-pointer font-medium text-primary text-[16px] hover:text-success transition-all"
+                prefetch
+              >
                 {tMenu('services')}
               </Link>
-               <Link href="/landing/coverage-area" className="cursor-pointer font-medium text-primary text-[16px] hover:text-success transition-all" prefetch>
+              <Link
+                href="/landing/coverage-area"
+                className="cursor-pointer font-medium text-primary text-[16px] hover:text-success transition-all"
+                prefetch
+              >
                 {tMenu('coverage-area')}
               </Link>
-              <Link href="/#contact" className="cursor-pointer font-medium text-primary text-[16px] hover:text-success transition-all" prefetch>
+              <Link
+                href="/#contact"
+                className="cursor-pointer font-medium text-primary text-[16px] hover:text-success transition-all"
+                prefetch
+              >
                 {tMenu('contact')}
               </Link>
             </ul>
@@ -85,8 +103,11 @@ const Navbar = () => {
                 height={16}
                 alt="Track Parcel"
               />
-              <Link href="/#track_parcel" className="list-none font-semibold text-primary-active text-[16px] hover:text-success transition-all">
-                   {tMenu('trackParcel')}
+              <Link
+                href="/#track_parcel"
+                className="list-none font-semibold text-primary-active text-[16px] hover:text-success transition-all"
+              >
+                {tMenu('trackParcel')}
               </Link>
             </div>
 
@@ -98,16 +119,16 @@ const Navbar = () => {
             </Link>
             <Link href="/landing/sign-up" prefetch>
               <button className="px-4 py-2 cursor-pointer font-bold button-primary rounded hover:brightness-105 transition-all hidden md:block">
-               {tMenu('signup')}
+                {tMenu('signup')}
               </button>
             </Link>
 
             {/* Language Toggle */}
             <button
               onClick={toggleLanguage}
-              className="px-4 py-2 cursor-pointer font-bold border border-[#00b795] bg-[#E5F7F4] text-primary-active rounded transition-all hidden md:block"
+              className="px-4 py-2 cursor-pointer font-bold border border-[#1976d2] bg-[#e3f2fd] text-primary-active rounded transition-all hidden md:block"
             >
-              {selectedLanguage === "en" ? "EN" : "BN"}
+              {selectedLanguage === 'en' ? 'EN' : 'BN'}
             </button>
 
             {/* Auth (Mobile) */}
@@ -118,7 +139,7 @@ const Navbar = () => {
             </Link>
             <Link href="/landing/sign-up">
               <button className="px-3 py-1 font-semibold text-[18px] rounded button-primary md:hidden">
-              {tMenu('signup')}
+                {tMenu('signup')}
               </button>
             </Link>
           </div>
@@ -127,7 +148,7 @@ const Navbar = () => {
         {/* Mobile Sidebar */}
         <aside
           className={`fixed top-0 left-0 z-50 h-full w-full bg-white p-5 transition-transform duration-300 ${
-            mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
+            mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
           <div className="flex justify-between items-center mb-4 border-b pb-3 border-gray-300">
@@ -161,24 +182,34 @@ const Navbar = () => {
                   href="/#track_parcel"
                   className="text-primary-active text-[16px]"
                 >
-                {tMenu('trackParcel')}
+                  {tMenu('trackParcel')}
                 </Link>
               </div>
             </li>
-            <Link href="/" className="text-primary text-[16px]"  onClick={() => setMobileSidebarOpen(false)}>
-              
+            <Link
+              href="/"
+              className="text-primary text-[16px]"
+              onClick={() => setMobileSidebarOpen(false)}
+            >
               {tMenu('home')}
             </Link>
-            <Link href="/#about" className="text-primary text-[16px]"onClick={() => setMobileSidebarOpen(false)}>
-             
-               {tMenu('about')}
-              
+            <Link
+              href="/#about"
+              className="text-primary text-[16px]"
+              onClick={() => setMobileSidebarOpen(false)}
+            >
+              {tMenu('about')}
             </Link>
-            <Link href="#" className="text-primary text-[16px]"> {tMenu('services')}</Link>
-            <Link href="/#contact" className="text-primary text-[16px]" onClick={() => setMobileSidebarOpen(false)}>
-            
-                 {tMenu('contact')}
-              
+            <Link href="#" className="text-primary text-[16px]">
+              {' '}
+              {tMenu('services')}
+            </Link>
+            <Link
+              href="/#contact"
+              className="text-primary text-[16px]"
+              onClick={() => setMobileSidebarOpen(false)}
+            >
+              {tMenu('contact')}
             </Link>
           </ul>
         </aside>

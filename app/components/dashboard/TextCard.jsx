@@ -1,13 +1,13 @@
-"use client";
-import Link from "next/link";
+'use client';
+import Link from 'next/link';
 
 const textCardData = [
-  { label: "Consignments", href: "/dashboard/consignments" },
-  { label: "Delivered", href: "#" },
-  { label: "Pending", href: "#" },
-  { label: "Returned", href: "#" },
-  { label: "Cancelled", href: "#" },
-  { label: "In Transit", href: "#" },
+  { label: 'Consignments', href: '/dashboard/consignments' },
+  { label: 'Delivered', href: '/dashboard/consignments' },
+  { label: 'Pending', href: '/dashboard/consignments' },
+  { label: 'Returned', href: '/dashboard/consignments' },
+  { label: 'Cancelled', href: '/dashboard/consignments' },
+  { label: 'In Transit', href: '/dashboard/consignments' },
 ];
 
 const TextCard = () => {
@@ -17,7 +17,7 @@ const TextCard = () => {
         <Link
           key={index}
           href={item.href}
-          className="bg-[#CCF0E9] py-6 rounded-lg  transition"
+          className="bg-[#bbdefb] py-6 rounded-lg  transition"
         >
           <p className="text-center text-primary font-medium text-[14px]">
             {item.label}

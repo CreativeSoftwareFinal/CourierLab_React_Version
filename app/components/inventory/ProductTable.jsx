@@ -1,71 +1,71 @@
-'use client'
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 
 const products = [
   {
-    image: "🟥",
-    name: "T-Shirt",
-    category: "Fashion",
-    size: "M",
-    weight: ".2kg",
-    purchasePrice: "1250 TK",
-    salePrice: "1550 TK",
-    sku: "TS561",
+    image: '🟥',
+    name: 'T-Shirt',
+    category: 'Fashion',
+    size: 'M',
+    weight: '.2kg',
+    purchasePrice: '1250 TK',
+    salePrice: '1550 TK',
+    sku: 'TS561',
     quantity: 200,
-    stockValue: "125045 TK",
-    status: "Pending",
+    stockValue: '125045 TK',
+    status: 'Pending',
   },
   {
-    image: "🟨",
-    name: "T-Shirt",
-    category: "Fashion",
-    size: "M",
-    weight: ".2kg",
-    purchasePrice: "1250 TK",
-    salePrice: "1550 TK",
-    sku: "TS562",
+    image: '🟨',
+    name: 'T-Shirt',
+    category: 'Fashion',
+    size: 'M',
+    weight: '.2kg',
+    purchasePrice: '1250 TK',
+    salePrice: '1550 TK',
+    sku: 'TS562',
     quantity: 10,
-    stockValue: "125045 TK",
-    status: "Active",
+    stockValue: '125045 TK',
+    status: 'Active',
   },
   {
-    image: "⬜",
-    name: "T-Shirt",
-    category: "Fashion",
-    size: "M",
-    weight: ".2kg",
-    purchasePrice: "1250 TK",
-    salePrice: "1550 TK",
-    sku: "TS563",
+    image: '⬜',
+    name: 'T-Shirt',
+    category: 'Fashion',
+    size: 'M',
+    weight: '.2kg',
+    purchasePrice: '1250 TK',
+    salePrice: '1550 TK',
+    sku: 'TS563',
     quantity: 200,
-    stockValue: "125045 TK",
-    status: "Active",
+    stockValue: '125045 TK',
+    status: 'Active',
   },
   {
-    image: "🟩",
-    name: "T-Shirt",
-    category: "Fashion",
-    size: "M",
-    weight: ".2kg",
-    purchasePrice: "1250 TK",
-    salePrice: "1550 TK",
-    sku: "TS564",
+    image: '🟩',
+    name: 'T-Shirt',
+    category: 'Fashion',
+    size: 'M',
+    weight: '.2kg',
+    purchasePrice: '1250 TK',
+    salePrice: '1550 TK',
+    sku: 'TS564',
     quantity: 200,
-    stockValue: "125045 TK",
-    status: "Pending",
+    stockValue: '125045 TK',
+    status: 'Pending',
   },
   {
-    image: "🟥",
-    name: "T-Shirt",
-    category: "Fashion",
-    size: "M",
-    weight: ".2kg",
-    purchasePrice: "1250 TK",
-    salePrice: "1550 TK",
-    sku: "TS565",
+    image: '🟥',
+    name: 'T-Shirt',
+    category: 'Fashion',
+    size: 'M',
+    weight: '.2kg',
+    purchasePrice: '1250 TK',
+    salePrice: '1550 TK',
+    sku: 'TS565',
     quantity: 0,
-    stockValue: "0 TK",
-    status: "Active",
+    stockValue: '0 TK',
+    status: 'Active',
   },
 ];
 
@@ -77,13 +77,13 @@ export default function ProductTable() {
     if (allChecked) {
       setSelected([]);
     } else {
-      setSelected(products.map((p) => p.sku));
+      setSelected(products.map(p => p.sku));
     }
   };
 
-  const toggleRow = (sku) => {
-    setSelected((prev) =>
-      prev.includes(sku) ? prev.filter((id) => id !== sku) : [...prev, sku]
+  const toggleRow = sku => {
+    setSelected(prev =>
+      prev.includes(sku) ? prev.filter(id => id !== sku) : [...prev, sku]
     );
   };
 
@@ -119,10 +119,10 @@ export default function ProductTable() {
               key={p.sku}
               className={
                 p.quantity === 0
-                  ? "bg-red-200"
+                  ? 'bg-red-200'
                   : p.quantity < 50
-                  ? "bg-yellow-100"
-                  : ""
+                  ? 'bg-yellow-100'
+                  : ''
               }
             >
               <td className="p-2 border text-center">
@@ -145,7 +145,7 @@ export default function ProductTable() {
               <td className="p-2 border">
                 <span
                   className={`px-2 py-1 rounded text-white text-xs ${
-                    p.status === "Active" ? "bg-green-500" : "bg-yellow-500"
+                    p.status === 'Active' ? 'bg-green-500' : 'bg-yellow-500'
                   }`}
                 >
                   {p.status}

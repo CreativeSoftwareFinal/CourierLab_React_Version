@@ -358,13 +358,13 @@ const Sidebar = ({ isOpen, onClose }) => {
                 key={idx}
                 className={`relative flex items-center gap-4 px-4 py-4 cursor-pointer ${
                   isActive
-                    ? 'bg-[#e5f7f4] !text-[#00b795] font-semibold border-l-4 border-[#00b795]'
+                    ? 'bg-[#e3f2fd] !text-[#1976d2] font-semibold border-l-4 border-[#1976d2]'
                     : 'text-primary hover:bg-[#e5f7f4] text-primary-hover'
                 }`}
               >
                 <Icon
                   className={`text-xl min-w-[20px] ${
-                    isActive ? 'text-[#00b795]' : ''
+                    isActive ? 'text-[#1976d2]' : ''
                   }`}
                 />
                 {isOpen && (

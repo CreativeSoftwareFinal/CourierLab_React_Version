@@ -20,7 +20,7 @@ const cardData = [
   },
   {
     title: 'Delivery List',
-    href: '#',
+    href: '/dashboard/consignments',
     icon: '/img/card-icon/card_md_support.png',
   },
   {
@@ -31,7 +31,7 @@ const cardData = [
 
   {
     title: 'Track Parcel',
-    href: '#',
+    href: '/dashboard/tracking-parcel',
     icon: '/img/card-icon/card_md_location.png',
   },
   ,

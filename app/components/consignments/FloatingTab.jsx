@@ -1,13 +1,13 @@
-import { FaBox } from "react-icons/fa";
-import { MdAddBox } from "react-icons/md";
-import { TbTableImport } from "react-icons/tb";
-import { FaFileImport } from "react-icons/fa6";
-import { MdOutlineError } from "react-icons/md";
-import Link from "next/link";
+import { FaBox } from 'react-icons/fa';
+import { MdAddBox } from 'react-icons/md';
+import { TbTableImport } from 'react-icons/tb';
+import { FaFileImport } from 'react-icons/fa6';
+import { MdOutlineError } from 'react-icons/md';
+import Link from 'next/link';
 const FloatingTab = () => {
   return (
-    <div className="fixed top-[85px] left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 pl-28">
-      <div className="bg-primary shadow-lg px-6 pt-4 pb-2 rounded-b-3xl flex gap-8 items-center">
+    <div className="fixed top-[85px] left-1/2 transform -translate-x-1/2 z-10 transition-all duration-300 pl-28 ">
+      <div className="bg-primary shadow-lg px-6 pt-4 pb-2 rounded-b-3xl flex gap-8 items-center ">
         <Link href="/dashboard/consignments">
           <div className="flex items-center gap-2">
             <FaBox className="text-red-500 text-sm" />
