@@ -28,12 +28,14 @@ const TrackParcel = () => {
       const data = await res.json();
       setParcel(data);
       setError(null);
-      setIsModalOpen(true); // Open modal after fetching parcel
+      setQuery('');
+      setIsModalOpen(true);
     } catch (err) {
       console.error(err);
       setError('❌ Failed to fetch parcel. Please check your tracking ID.');
       setParcel(null);
-      setIsModalOpen(false); // Close modal on error
+      setIsModalOpen(false);
+      setQuery('');
     }
   };
 

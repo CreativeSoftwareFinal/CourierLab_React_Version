@@ -116,9 +116,6 @@
 
 // export default Login;
 
-
-
-
 // "use client";
 
 // import { useState } from "react";
@@ -138,7 +135,7 @@
 //   const router = useRouter();
 
 //   const handleLogin = async (e) => {
-  
+
 //     e.preventDefault();
 //     setLoading(true);
 //     setError("");
@@ -274,72 +271,67 @@
 
 // export default Login;
 
+'use client';
 
-
-
-
-
-
-
-"use client";
-
-import { useState } from "react";
-import { FiMail, FiLock } from "react-icons/fi";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import LoginBtn from "./LoginBtn";
-import { useTranslations } from "next-intl";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useState } from 'react';
+import { FiMail, FiLock } from 'react-icons/fi';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import LoginBtn from './LoginBtn';
+import { useTranslations } from 'next-intl';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
-  const tLogin = useTranslations("loginPage");
+  const tLogin = useTranslations('loginPage');
   const [isChecked, setIsChecked] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async e => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_MERCHANT_API_KEY}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({ email, password }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_MERCHANT_API_KEY}/login`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({ email, password }),
+        }
+      );
 
       const data = await res.json();
 
       if (res.ok) {
-        if (typeof data.token === "object") {
-          localStorage.setItem("token", JSON.stringify(data.token));
+        if (typeof data.token === 'object') {
+          localStorage.setItem('token', JSON.stringify(data.token));
         } else {
-          localStorage.setItem("token", data.token);
+          localStorage.setItem('token', data.token);
         }
 
-     
-        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem('user', JSON.stringify(data.user));
 
-        toast.success("Login successful!", {
-          position: "top-right",
+        toast.success('Login successful!', {
+          position: 'top-right',
         });
 
         setTimeout(() => {
-          router.push("/dashboard");
+          router.push('/dashboard');
         }, 2000);
       } else {
-        toast.error("Invalid email or password.", {
-          position: "top-right",
+        toast.error('Invalid email or password.', {
+          position: 'top-right',
         });
       }
     } catch (err) {
-      toast.error("Something went wrong. Please try again.", {
-        position: "top-right",
+      toast.error('Something went wrong. Please try again.', {
+        position: 'top-right',
       });
     }
 
@@ -364,7 +356,7 @@ const Login = () => {
           />
 
           <h2 className="text-gray-900 text-center text-3xl font-semibold">
-            {tLogin("title")}
+            {tLogin('title')}
           </h2>
 
           <div className="mt-10 space-y-6">
@@ -373,9 +365,9 @@ const Login = () => {
                 type="email"
                 required
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={tLogin("emailLabel")}
-                className="w-full text-gray-800 text-md border border-gray-300 px-4 py-3 rounded-md outline-[#00b795]"
+                onChange={e => setEmail(e.target.value)}
+                placeholder={tLogin('emailLabel')}
+                className="w-full text-gray-800 text-md border border-gray-300 px-4 py-3 rounded-md outline-[#2a64f6]"
               />
               <FiMail className="absolute right-4 text-gray-400" size={20} />
             </div>
@@ -385,9 +377,9 @@ const Login = () => {
                 type="password"
                 required
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder={tLogin("passwordLabel")}
-                className="w-full text-gray-800 text-md border border-gray-300 px-4 py-3 rounded-md outline-[#00b795]"
+                onChange={e => setPassword(e.target.value)}
+                placeholder={tLogin('passwordLabel')}
+                className="w-full text-gray-800 text-md border border-gray-300 px-4 py-3 rounded-md outline-[#2a64f6]"
               />
               <FiLock className="absolute right-4 text-gray-400" size={20} />
             </div>
@@ -419,26 +411,26 @@ const Login = () => {
                   </svg>
                 )}
                 <span className="text-[14px]  font-medium text-gray-700">
-                  {tLogin("rememberMe")}
+                  {tLogin('rememberMe')}
                 </span>
               </label>
 
-              <span className="text-[16px] font-semibold text-gray-400 cursor-pointer hover:text-[#00b795]">
-                {tLogin("forgotPassword")}
+              <span className="text-[16px] font-semibold text-gray-400 cursor-pointer hover:text-[#2a64f6]">
+                {tLogin('forgotPassword')}
               </span>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full cursor-pointer py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-[#00b795] hover:bg-[#00a285] focus:outline-none"
+              className="w-full cursor-pointer py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-[#2a64f6] hover:bg-[#2a64f6] focus:outline-none"
             >
-              {loading ? "Logging in..." : tLogin("loginButton")}
+              {loading ? 'Logging in...' : tLogin('loginButton')}
             </button>
 
             <div className="flex items-center mt-5 justify-center">
               <p className="text-gray-800 text-lg font-medium text-center ">
-                {tLogin("noAccount")}
+                {tLogin('noAccount')}
               </p>
               <LoginBtn />
             </div>
